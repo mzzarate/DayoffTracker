@@ -23,8 +23,11 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 };
 
-app.listen(PORT,function() {
-    console.log('App Listening on port:' +  PORT);
+db.sequelize.sync({ force: true }).then(function() {
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });
 });
+
 
 module.exports = app;
