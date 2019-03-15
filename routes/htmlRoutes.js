@@ -6,7 +6,7 @@ module.exports = function(app) {
   // Load index page
 
 app.get('/',function(req,res){
-  res.sendFile(patj.join(__dirname,'..public/index.html'));
+  res.sendFile(patj.join(__dirname,'../public/index.html'));
 })
 
 
