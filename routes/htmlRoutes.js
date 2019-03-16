@@ -1,15 +1,7 @@
 var db = require("../models");
 
-var path = require('path');
-
 module.exports = function(app) {
   // Load index page
-
-app.get('/',function(req,res){
-  res.sendFile(patj.join(__dirname,'../public/index.html'));
-})
-
-
   app.get("/", function(req, res) {
     db.Example.findAll({}).then(function(dbExamples) {
       res.render("index", {
