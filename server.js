@@ -76,12 +76,12 @@ db.User.findOne({
   });
 
 // when we save a user to a session
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
 // when we retrieve the data from a user session
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser(function(id, done) {
   db.User.findOne({ where: { id: id } })
     .then(function (user) {
       done(null, user);
@@ -91,6 +91,5 @@ passport.deserializeUser(function (id, done) {
       done(error, false);
     })
 });
-
 
 module.exports = app;
