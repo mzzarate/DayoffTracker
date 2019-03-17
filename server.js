@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 
-require('./routes/apiRoutes')(app,passport);
+require('./routes/apiRoutes')(app, passport);
 require('./routes/htmlRoutes')(app);
 
 var syncOptions = { force: false };
@@ -49,7 +49,6 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-
 //try to find user
 db.User.findOne({
   google_id: google_id
@@ -79,6 +78,18 @@ db.User.findOne({
 // when we save a user to a session
 passport.serializeUser(function (user, done) {
   done(null, user.id);
+});
+
+// when we retrieve the data from a user session
+passport.deserializeUser(function (id, done) {
+  db.User.findOne({ where: { id: id } })
+    .then(function (user) {
+      done(null, user);
+    })
+    .catch(error => {
+      console.log(error);
+      done(error, false);
+    })
 });
 
 
