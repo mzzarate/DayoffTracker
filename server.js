@@ -6,6 +6,11 @@ var db = require('./models');
 
 var app = express();
 
+var passportGoogle = require('passport-google-oauth20');
+
+console.log(passportGoogle);
+
+
 var PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
