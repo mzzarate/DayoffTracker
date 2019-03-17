@@ -6,7 +6,7 @@ var db = require('./models');
 
 var app = express();
 
-var passportGoogle = require('passport-google-oauth20');
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 console.log(passportGoogle);
 
