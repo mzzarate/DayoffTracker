@@ -24,7 +24,7 @@ module.exports = function(app) {
     });
   });
 
-  //Route used to authenticate the google sign in
+  //Route used to authenticate the google sign in by saving the users profile and email
   app.get(
     "/auth/google",
     passport.authenticate("google", { scope: ["profile","email"] })
