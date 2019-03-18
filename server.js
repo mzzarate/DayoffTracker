@@ -70,6 +70,7 @@ db.User.findOne({
       return cb(null, user);
     }
   })
+  //catches errors an hack attempts
   .catch(err => {
     console.log(err);
     return cb(err, null);
