@@ -73,7 +73,7 @@ db.User.findOne({
     console.log(err);
     return cb(err, null);
   });
-}));
+})); 
 
 // when we save a user to a session
 passport.serializeUser(function(user, done) {

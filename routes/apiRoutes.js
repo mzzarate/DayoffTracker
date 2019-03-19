@@ -29,7 +29,6 @@ module.exports = function(app, passport) {
     "/_auth/google",
     passport.authenticate("google", { scope: ["profile","email"] })
   );
-  
   //Route used to authenticate the google sign in and redirect the user back to the home page
   app.get(
     "/_auth/google/callback",
