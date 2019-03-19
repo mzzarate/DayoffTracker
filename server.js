@@ -38,16 +38,14 @@ db.sequelize.sync({ force: true }).then(function () {
 
 // Google configure strategy
 passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://www.example.com/auth/google/callback"
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK
 },
-  function (accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
+function(accessToken, refreshToken, data, cb) {
+  console.log(data);
+  var email = data.emails[0].value;
+  var google_id = data.id;
 
 //try to find user
 db.User.findOne({
@@ -75,6 +73,7 @@ db.User.findOne({
     console.log(err);
     return cb(err, null);
   });
+}));
 
 // when we save a user to a session
 passport.serializeUser(function(user, done) {
