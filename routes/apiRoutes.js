@@ -26,13 +26,13 @@ module.exports = function(app) {
 
   //Route used to authenticate the google sign in by saving the users profile and email
   app.get(
-    "/auth/google",
+    "/_auth/google",
     passport.authenticate("google", { scope: ["profile","email"] })
   );
   
   //Route used to authenticate the google sign in and redirect the user back to the home page
   app.get(
-    "/auth/google/callback",
+    "/_auth/google/callback",
     passport.authenticate("google", { failureRedirect: "/login" }),
     function(req, res) {
       // Successful authentication, redirect home.
