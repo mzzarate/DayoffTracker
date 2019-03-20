@@ -1,4 +1,5 @@
-
+var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dnsxp4zpv/upload";
+var CLOUDINARY_UPLOAD_PRESET = 'fxd5nzcm';
 (function ($) {
     "use strict";
 
@@ -26,6 +27,9 @@
         });
     });
 
+    // Image uplaod on click function
+    $('#imageUpload').on("click", cloudWidget);
+
     function validate (input) {
         if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
             if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
@@ -51,6 +55,38 @@
         $(thisAlert).removeClass('alert-validate');
     }
     
+    // Cloud
+    function cloudWidget() {
+
+        var widget = cloudinary.createUploadWidget({ 
+            cloudName: "dnsxp4zpv", uploadPreset: "fxd5nzcm" }, (error, result) => {
+                if(result.event === "success"){
+                    var img = result.info.url;
+                    $("[name='image']").val(img);
+                    $("#form-image").attr("src", img)
+                    // var formData = new FormData();
+                    // formData.append('img', img);
+                    // formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                } 
+                console.log(result);
+
+                // axios({
+                //     url: CLOUDINARY_URL,
+                //     method: 'POST',
+                //     headers: {
+                //         "Content-Type": "application/x-www-form-urlencoded"
+                //     },
+                //     data: formData
+                // }).then(function(res) {
+                //     console.log(res);
+                // }).catch(function(err) {
+                //     console.error(error);
+                // })
+
+             });
+
+        widget.open();
+    }
     
 
 })(jQuery);
