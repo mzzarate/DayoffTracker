@@ -45,10 +45,10 @@ a {
   margin-left: 10%;
 }
 #imageUpload{
-  padding: 2%;
+  border-radius: 20%;
   margin: 3%;
-  width: 50%;
-  margin-left: 15%;
+  width: 95%;
+
 }
 
 a:focus {
