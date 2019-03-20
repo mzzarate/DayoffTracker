@@ -1,4 +1,5 @@
-
+var CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dnsxp4zpv/upload";
+var CLOUDINARY_UPLOAD_PRESET = 'fxd5nzcm';
 (function ($) {
     "use strict";
 
@@ -25,6 +26,8 @@
            hideValidate(this);
         });
     });
+
+    // Image uplaod on click function
     $('#imageUpload').on("click", cloudWidget);
 
     function validate (input) {
@@ -52,6 +55,7 @@
         $(thisAlert).removeClass('alert-validate');
     }
     
+    // Cloud
     function cloudWidget() {
 
         var widget = cloudinary.createUploadWidget({ 
@@ -60,8 +64,25 @@
                     var img = result.info.url;
                     $("[name='image']").val(img);
                     $("#form-image").attr("src", img)
+                    // var formData = new FormData();
+                    // formData.append('img', img);
+                    // formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
                 } 
                 console.log(result);
+
+                // axios({
+                //     url: CLOUDINARY_URL,
+                //     method: 'POST',
+                //     headers: {
+                //         "Content-Type": "application/x-www-form-urlencoded"
+                //     },
+                //     data: formData
+                // }).then(function(res) {
+                //     console.log(res);
+                // }).catch(function(err) {
+                //     console.error(error);
+                // })
+
              });
 
         widget.open();

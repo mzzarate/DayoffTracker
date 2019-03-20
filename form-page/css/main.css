@@ -38,6 +38,18 @@ a {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
+/* Image Uploading Style */
+#form-image{
+  border-radius: 8%;
+  width: 80%;
+  margin-left: 10%;
+}
+#imageUpload{
+  padding: 2%;
+  margin: 3%;
+  width: 50%;
+  margin-left: 15%;
+}
 
 a:focus {
 	outline: none !important;
