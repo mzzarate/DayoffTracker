@@ -25,6 +25,7 @@
            hideValidate(this);
         });
     });
+    $('#imageUpload').on("click", cloudWidget);
 
     function validate (input) {
         if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
@@ -51,6 +52,20 @@
         $(thisAlert).removeClass('alert-validate');
     }
     
+    function cloudWidget() {
+
+        var widget = cloudinary.createUploadWidget({ 
+            cloudName: "dnsxp4zpv", uploadPreset: "fxd5nzcm" }, (error, result) => {
+                if(result.event === "success"){
+                    var img = result.info.url;
+                    $("[name='image']").val(img);
+                    $("#form-image").attr("src", img)
+                } 
+                console.log(result);
+             });
+
+        widget.open();
+    }
     
 
 })(jQuery);
