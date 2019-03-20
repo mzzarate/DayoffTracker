@@ -23,10 +23,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(multer({
-    dest: "./uploads/"
-}));
-
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
@@ -49,6 +45,28 @@ app.post("/file-upload", function(req, res, next){
 			}
 		});
 	}
+});
+
+app.get("/api/examples", function(req, res) {
+    db.Example.findAll({}).then(function(dbExamples) {
+      res.json(dbExamples);
+    });
+  });
+
+  // Create a new example
+  app.post("/api/examples", function(req, res) {
+    db.Example.create(req.body).then(function(dbExample) {
+      res.json(dbExample);
+    });
+  });
+
+  // Delete an example by id
+  app.delete("/api/examples/:id", function(req, res) {
+    db.Example.destroy({ where: { id: req.params.id } }).then(function(
+      dbExample
+    ) {
+      res.json(dbExample);
+    });
 });
 
 db.sequelize.sync({ force: true }).then(function() {
