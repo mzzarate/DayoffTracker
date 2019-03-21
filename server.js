@@ -11,16 +11,19 @@ var passport = require('passport');
 var passportGoogleAuth = require('passport-google-oauth20');
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-
 var PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 
+app.use(require('cookie-parser')());
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 require('./routes/apiRoutes')(app, passport);
 require('./routes/htmlRoutes')(app);
-
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
@@ -34,7 +37,6 @@ db.sequelize.sync({ force: true }).then(function () {
     console.log('App listening on: http://localhost:' + PORT);
   });
 });
-
 
 // Google configure strategy
 passport.use(new GoogleStrategy({
