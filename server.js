@@ -39,17 +39,11 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
-<<<<<<< HEAD
 //app.use(expbp.bodyParser({uploadDir:'./uploads'}));
 //app.use(express.bodyParser({ uploadDir: './uploads' }));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-=======
-
-require('./routes/apiRoutes')(app, passport);
-require('./routes/htmlRoutes')(app);
->>>>>>> origin/master
 
 var syncOptions = { force: false };
 
@@ -59,7 +53,6 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 };
 
-<<<<<<< HEAD
 app.post("/file-upload", function(req, res, next){
 	if (req.files) {
 		console.log(util.inspect(req.files));
@@ -100,10 +93,6 @@ app.get("/api/examples", function(req, res) {
 
 db.sequelize.sync({ force: true }).then(function() {
   app.listen(PORT, function() {
-=======
-db.sequelize.sync({ force: true }).then(function () {
-  app.listen(PORT, function () {
->>>>>>> origin/master
     console.log('App listening on: http://localhost:' + PORT);
   });
 });
