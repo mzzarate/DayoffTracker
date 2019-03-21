@@ -2,6 +2,8 @@ require('dotenv').config();
 
 var express = require('express');
 
+var exphbs = require("express-handlebars");
+
 var db = require('./models');
 
 var app = express();
@@ -22,6 +24,16 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Handlebars
+app.engine(
+  "handlebars",
+  exphbs({
+    defaultLayout: "main"
+  })
+);
+app.set("view engine", "handlebars");
+
+
 require('./routes/apiRoutes')(app, passport);
 require('./routes/htmlRoutes')(app);
 var syncOptions = { force: false };
@@ -40,50 +52,50 @@ db.sequelize.sync({ force: true }).then(function () {
 
 // Google configure strategy
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.GOOGLE_CALLBACK
 },
-function(accessToken, refreshToken, data, cb) {
-  console.log(data);
-  var email = data.emails[0].value;
-  var google_id = data.id;
+  function (accessToken, refreshToken, data, cb) {
+    console.log(data);
+    var email = data.emails[0].value;
+    var google_id = data.id;
 
-//try to find user
-db.User.findOne({
-  google_id: google_id
-})
-  .then(function (user) {
-    if (!user) {
-      // SAVE USER DATA HERE
-      db.User.create({
-        email: email,
-        google_id: google_id
-      })
-        .then(function (user) {
-          //more magic after creating the user
+    //try to find user
+    db.User.findOne({
+      google_id: google_id
+    })
+      .then(function (user) {
+        if (!user) {
+          // SAVE USER DATA HERE
+          db.User.create({
+            email: email,
+            google_id: google_id
+          })
+            .then(function (user) {
+              //more magic after creating the user
+              return cb(null, user);
+            });
+        }
+        else {
+          //more magic after finding the user
           return cb(null, user);
-        });
-    }
-    else {
-      //more magic after finding the user
-      return cb(null, user);
-    }
-  })
-  //catches errors an hack attempts
-  .catch(err => {
-    console.log(err);
-    return cb(err, null);
-  });
-})); 
+        }
+      })
+      //catches errors an hack attempts
+      .catch(err => {
+        console.log(err);
+        return cb(err, null);
+      });
+  }));
 
 // when we save a user to a session
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
 // when we retrieve the data from a user session
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function (id, done) {
   db.User.findOne({ where: { id: id } })
     .then(function (user) {
       done(null, user);
