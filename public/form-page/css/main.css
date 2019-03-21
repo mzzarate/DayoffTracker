@@ -11,7 +11,6 @@
 }
 
 
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
@@ -37,6 +36,18 @@ a {
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+}
+/* Image Uploading Style */
+#form-image{
+  border-radius: 8%;
+  width: 80%;
+  margin-left: 10%;
+}
+#imageUpload{
+  border-radius: 20%;
+  margin: 3%;
+  width: 95%;
+
 }
 
 a:focus {
