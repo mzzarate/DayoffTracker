@@ -2,12 +2,9 @@ var db = require("../models");
 
 module.exports = function(app, passport) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
-  });
 
+<<<<<<< HEAD
+=======
   // Create a new example
   app.post("/api/examples", function(req, res) {
     db.Example.create(req.body).then(function(dbExample) {
@@ -38,4 +35,5 @@ module.exports = function(app, passport) {
       res.redirect("/");
     }
   );
+>>>>>>> origin/master
 };
