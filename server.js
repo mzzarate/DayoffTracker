@@ -19,14 +19,31 @@ var exphbs = require("express-handlebars");
 
 var passport = require('passport');
 
+var app = express();
+
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
+
+// Parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
+
 var passportGoogleAuth = require('passport-google-oauth20');
+
+
 
 
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 var db = require('./models');
 
-var app = express();
+// var app = express();
 
 var PORT = process.env.PORT || 3000;
 
