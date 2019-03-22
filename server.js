@@ -33,7 +33,6 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-
 require('./routes/apiRoutes')(app, passport);
 require('./routes/htmlRoutes')(app);
 var syncOptions = { force: false };
