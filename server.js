@@ -1,18 +1,57 @@
+// var mysql = require('mysql')
+
+// var connection = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'your_user',
+//   password: 'some_secret',
+//   database: 'the_app_database'
+// })
+
+// connection.connect(function(err) {
+//   if (err) throw err
+//   console.log('You are now connected...')
+// })
 require('dotenv').config();
 
 var express = require('express');
 
 var exphbs = require("express-handlebars");
 
+<<<<<<< HEAD
 var db = require('./models');
+=======
+var passport = require('passport');
+>>>>>>> origin/master
 
 var app = express();
 
-var passport = require('passport');
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
+
+// Parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 var passportGoogleAuth = require('passport-google-oauth20');
 
+
+
+
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
+<<<<<<< HEAD
+=======
+
+var db = require('./models');
+
+// var app = express();
+
+>>>>>>> origin/master
 var PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
@@ -23,6 +62,7 @@ app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+<<<<<<< HEAD
 
 // Handlebars
 app.engine(
@@ -35,6 +75,14 @@ app.set("view engine", "handlebars");
 
 require('./routes/apiRoutes')(app, passport);
 require('./routes/htmlRoutes')(app);
+=======
+//app.use(expbp.bodyParser({uploadDir:'./uploads'}));
+//app.use(express.bodyParser({ uploadDir: './uploads' }));
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
+
+>>>>>>> origin/master
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
@@ -43,8 +91,26 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 };
 
-db.sequelize.sync({ force: true }).then(function () {
-  app.listen(PORT, function () {
+// app.post("/file-upload", function(req, res, next){
+// 	if (req.files) {
+// 		console.log(util.inspect(req.files));
+// 		if (req.files.myFile.size === 0) {
+// 		            return next(new Error("Hey, first would you select a file?"));
+// 		}
+// 		fs.exists(req.files.myFile.path, function(exists) {
+// 			if(exists) {
+// 				res.end("Got your file!");
+// 			} else {
+// 				res.end("Well, there is no magic for those who don’t believe in it!");
+// 			}
+// 		});
+// 	}
+// });
+
+
+
+db.sequelize.sync(syncOptions).then(function() {
+  app.listen(PORT, function() {
     console.log('App listening on: http://localhost:' + PORT);
   });
 });
@@ -105,4 +171,6 @@ passport.deserializeUser(function (id, done) {
     })
 });
 
-module.exports = app;
+
+require('./routes/apiRoutes')(app, passport);
+require('./routes/htmlRoutes')(app);

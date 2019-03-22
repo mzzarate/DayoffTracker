@@ -1,12 +1,34 @@
 var db = require("../models");
 
 module.exports = function(app, passport) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
+
+  app.get("/lp/create", function(req, res) {
+
+    // edited lp create to add in a lp_name
+  
+    db.lp.create({
+  
+      item_name: "fake stuff"
+  
+    })
+  
+      // pass the result of our call
+  
+      .then(function(dbLp) {
+  
+        // log the result to our terminal/bash window
+  
+        console.log(dbLp);
+  
+        // redirect
+  
+        res.redirect("/");
+  
+      });
+  
   });
+
+  // Get all examples
 
   // Create a new example
   app.post("/api/examples", function(req, res) {
