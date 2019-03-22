@@ -1,14 +1,18 @@
 var db = require("../models");
 
-var path = require("path");
-
 module.exports = function(app) {
-  /*// Load index page
+  // Load index page
   app.get("/", function(req, res) {
+    console.log(req.user);
+    var email = "";
+    if(typeof req.user !== 'undefined'){
+      email = req.user.dataValues.email;
+    }
     db.Example.findAll({}).then(function(dbExamples) {
       res.render("index", {
         msg: "Welcome!",
-        examples: dbExamples
+        examples: dbExamples,
+        email: email
       });
     });
   });
@@ -22,20 +26,7 @@ module.exports = function(app) {
         example: dbExample
       });
     });
-  });*/
-
-  //GET route to display the survey.html page
-  app.get('/form',function(req,res){
-    res.sendFile(path.join(__dirname, '../form-page/form.html'));
-
-});
-
-//GET route to display the home.html page by default
-app.get('/',function(req,res){
-    res.sendFile(path.join(__dirname, '../index.html'));
-    //for handlebars
-    // res.render('index');
-});
+  });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
@@ -44,3 +35,4 @@ app.get('/',function(req,res){
 
   });
 };
+
