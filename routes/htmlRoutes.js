@@ -27,15 +27,20 @@ module.exports = function(app) {
   //GET route to display the survey.html page
   app.get('/form',function(req,res){
     res.sendFile(path.join(__dirname, '../form-page/form.html'));
+
 });
 
 //GET route to display the home.html page by default
-app.get('*',function(req,res){
+app.get('/',function(req,res){
     res.sendFile(path.join(__dirname, '../index.html'));
+    //for handlebars
+    // res.render('index');
 });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
-    res.render("404");
+    // res.render("404");
+    res.sendFile(path.join(__dirname, '../index.html'));
+
   });
 };
