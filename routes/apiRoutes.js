@@ -24,18 +24,13 @@ module.exports = function(app, passport) {
     });
   });
 
-  //Route used to authenticate the google sign in by saving the users profile and email
-  app.get(
-    "/_auth/google",
-    passport.authenticate("google", { scope: ["profile", "email"] })
-  );
-  //Route used to authenticate the google sign in and redirect the user back to the home page
-  app.get(
-    "/_auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login" }),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect("/");
-    }
-  );
+  app.get('/_auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+ 
+  app.get('/_auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/user-account');
+  });
 };
